@@ -9,7 +9,7 @@ roleOptions = ["assassin", "detective", "innocent"]
 playerList = []
 nameOptions = ["Jacob", "Michael", "Josh", "Matt", "Ethan", "Andrew", "Daniel", "Anthony", "Chris", "Joseph", "Emily", "Emma", "Madison", "Abigail", "Olivia", "Isabella", "Hannah", "Samantha", "Ava", "Ashley"]
 nc = 20 - 1
-charOpinions = [None] #scale 0-2 | 0 = negative (targets player), 1 = neutral, 2 = positive (will not target player)
+charOpinions = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1] #scale 0-2 | 0 > = negative (targets player), 1 = neutral, 2 < = positive (will not target player)
 
 def gameStart():
     print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nAssassin")
@@ -112,12 +112,45 @@ def game():
     print("You are " + role + "\nTurn options")
 
     if role == "innocent":
-        choice = input("1. Accuse\n2. Do nothing\n\n").lower()
+        innoOptions()
 
-        if choice == "1" or choice == "accuse":
-            accuseWho = input("Who do you want to accuse")
-        
-        elif choice == "2" or choice == "nothing" or choice == "do nothing":
-            game2()
+def innoOptions():
+    choice = input("1. Accuse\n2. Do nothing\n\n").lower()
+
+    if choice == "1" or choice == "accuse":
+        accuseWho = input("Who do you want to accuse")
+
+        if input in playerList:
+            if input == playerList[0]:
+                charOpinions[0] = charOpinions[0] - 1
+            elif input == playerList[1]:
+                charOpinions[1] = charOpinions[1] - 1 
+            elif input == playerList[2]:
+                charOpinions[2] = charOpinions[2] - 1 
+            elif input == playerList[3]:
+                charOpinions[3] = charOpinions[3] - 1 
+            elif input == playerList[4]:
+                charOpinions[4] = charOpinions[4] - 1 
+            elif input == playerList[5]:
+                charOpinions[5] = charOpinions[5] - 1 
+            elif input == playerList[6]:
+                charOpinions[6] = charOpinions[6] - 1 
+            elif input == playerList[7]:
+                charOpinions[7] = charOpinions[7] - 1 
+            elif input == playerList[8]:
+                charOpinions[8] = charOpinions[8] - 1 
+            elif input == playerList[9]:
+                charOpinions[9] = charOpinions[9] - 1 
+            elif input == playerList[10]:
+                charOpinions[10] = charOpinions[10] - 1 
+            elif input == playerList[11]:
+                charOpinions[11] = charOpinions[11] - 1 
+        else:
+            print("\n\n" + choice + " is not a valid option")
+            time.sleep(3)
+            innoOptions()
+
+    elif choice == "2" or choice == "nothing" or choice == "do nothing":
+        game2()
 
 gameStart()
