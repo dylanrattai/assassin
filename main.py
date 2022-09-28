@@ -12,6 +12,12 @@ nc = 20 - 1
 charOpinions = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1] #scale 0-2 | 0 > = negative (targets player), 1 = neutral, 2 < = positive (will not target player)
 charRoles = []
 
+def duplicateCheck(input):
+    for elem in input:
+        if input.count(elem) > 1:
+            return True #Has duplicate
+    return False #No duplicate
+
 def gameStart():
     print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nAssassin")
     choice = input("1. Play\n2. Help/Info\n\n").lower()
@@ -84,19 +90,112 @@ def howToPlay():
 
 def nameSelector():
     global playerList
+    global charRoles
 
     if playerCount == 6:
         playerList = [nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)]]
+
+        while duplicateCheck(playerList) == True:
+            playerList = [nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)]]
+
         if role == "innocent":
-            det = random.randint(0, playerCount - 1)
-            assassin = random.randint(0, playerCount - 1)
-            charRoles[det] = ""
+            d = random.randint(0, playerCount - 1)
+            a = random.randint(0, playerCount - 1)
+
+            while a == d:
+                a = random.randint(0, playerCount - 1)
+
+            charRoles = ["innocent", "innocent", "innocent", "innocent", "innocent", "innocent"]
+            charRoles[d] = "detective"
+            charRoles[a] = "assassin"
+        elif role == "detective":
+            a = random.randint(0, playerCount - 1)
+
+            charRoles = ["innocent", "innocent", "innocent", "innocent", "innocent", "innocent"]
+            charRoles[a] = "assassin"
+        elif role == "assassin":
+            d = random.randint(0, playerCount - 1)
+
+            charRoles = ["innocent", "innocent", "innocent", "innocent", "innocent", "innocent"]
+            charRoles[d] = "detective"
     elif playerCount == 8:
         playerList = [nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)]]
+        
+        while duplicateCheck(playerList) == True:
+            playerList = [nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)]]
+        
+        if role == "innocent":
+            d = random.randint(0, playerCount - 1)
+            a = random.randint(0, playerCount - 1)
+
+            while a == d:
+                a = random.randint(0, playerCount - 1)
+
+            charRoles = ["innocent", "innocent", "innocent", "innocent", "innocent", "innocent", "innocent", "innocent"]
+            charRoles[d] = "detective"
+            charRoles[a] = "assassin"
+        elif role == "detective":
+            a = random.randint(0, playerCount - 1)
+
+            charRoles = ["innocent", "innocent", "innocent", "innocent", "innocent", "innocent", "innocent", "innocent"]
+            charRoles[a] = "assassin"
+        elif role == "assassin":
+            d = random.randint(0, playerCount - 1)
+
+            charRoles = ["innocent", "innocent", "innocent", "innocent", "innocent", "innocent", "innocent", "innocent"]
+            charRoles[d] = "detective"
     elif playerCount == 10:
         playerList = [nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)]]
+        
+        while duplicateCheck(playerList) == True:
+            playerList = [nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)]]
+        
+        if role == "innocent":
+            d = random.randint(0, playerCount - 1)
+            a = random.randint(0, playerCount - 1)
+
+            while a == d:
+                a = random.randint(0, playerCount - 1)
+
+            charRoles = ["innocent", "innocent", "innocent", "innocent", "innocent", "innocent", "innocent", "innocent", "innocent", "innocent"]
+            charRoles[d] = "detective"
+            charRoles[a] = "assassin"
+        elif role == "detective":
+            a = random.randint(0, playerCount - 1)
+
+            charRoles = ["innocent", "innocent", "innocent", "innocent", "innocent", "innocent", "innocent", "innocent", "innocent", "innocent"]
+            charRoles[a] = "assassin"
+        elif role == "assassin":
+            d = random.randint(0, playerCount - 1)
+
+            charRoles = ["innocent", "innocent", "innocent", "innocent", "innocent", "innocent", "innocent", "innocent", "innocent", "innocent"]
+            charRoles[d] = "detective"
     elif playerCount == 12:
         playerList = [nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)]]
+        
+        while duplicateCheck(playerList) == True:
+            playerList = [nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)]]
+        
+        if role == "innocent":
+            d = random.randint(0, playerCount - 1)
+            a = random.randint(0, playerCount - 1)
+
+            while a == d:
+                a = random.randint(0, playerCount - 1)
+
+            charRoles = ["innocent", "innocent", "innocent", "innocent", "innocent", "innocent", "innocent", "innocent", "innocent", "innocent", "innocent", "innocent"]
+            charRoles[d] = "detective"
+            charRoles[a] = "assassin"
+        elif role == "detective":
+            a = random.randint(0, playerCount - 1)
+
+            charRoles = ["innocent", "innocent", "innocent", "innocent", "innocent", "innocent", "innocent", "innocent", "innocent", "innocent", "innocent", "innocent"]
+            charRoles[a] = "assassin"
+        elif role == "assassin":
+            d = random.randint(0, playerCount - 1)
+
+            charRoles = ["innocent", "innocent", "innocent", "innocent", "innocent", "innocent", "innocent", "innocent", "innocent", "innocent", "innocent", "innocent"]
+            charRoles[d] = "detective"
 
 #not done yet \/
 def game():
