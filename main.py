@@ -10,6 +10,7 @@ playerList = []
 nameOptions = ["Jacob", "Michael", "Josh", "Matt", "Ethan", "Andrew", "Daniel", "Anthony", "Chris", "Joseph", "Emily", "Emma", "Madison", "Abigail", "Olivia", "Isabella", "Hannah", "Samantha", "Ava", "Ashley"]
 nc = 20 - 1
 charOpinions = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1] #scale 0-2 | 0 > = negative (targets player), 1 = neutral, 2 < = positive (will not target player)
+charRoles = []
 
 def gameStart():
     print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nAssassin")
@@ -86,6 +87,10 @@ def nameSelector():
 
     if playerCount == 6:
         playerList = [nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)]]
+        if role == "innocent":
+            det = random.randint(0, playerCount - 1)
+            assassin = random.randint(0, playerCount - 1)
+            charRoles[det] = ""
     elif playerCount == 8:
         playerList = [nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)], nameOptions[random.randint(0, nc)]]
     elif playerCount == 10:
