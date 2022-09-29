@@ -1,4 +1,5 @@
-playerlist = ["name1", "name2", "name3", "name4", "name5", "name6", "name7"]
+playerList = ["name1", "name2", "name3", "name4", "name5", "name6", "name7"]
+charOpinions = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 
 def opinionDown(input):
     if input in playerList:
@@ -40,3 +41,13 @@ def opinionDown(input):
                 return True
     else:
         print("ERROR in opinionDown")
+
+def  test(input, char):
+    global charOpinions
+
+    if input == "down":
+        charOpinions[char] = charOpinions[char] - 1
+    elif input == "up":
+        charOpinions[char] = charOpinions[char] + 1
+    else:
+        print("ERROR in test")

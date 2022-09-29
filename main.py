@@ -2,16 +2,16 @@ import time
 import random
 
 game = False
-playerCount = None
-alivePlayerCount = None
-alivePlayers = None
-role = None
+playerCount = 0
+alivePlayerCount = 0
+role = "none"
 roleOptions = ["assassin", "detective", "innocent"]
 playerList = []
 nameOptions = ["Jacob", "Michael", "Josh", "Matt", "Ethan", "Andrew", "Daniel", "Anthony", "Chris", "Joseph", "Emily", "Emma", "Madison", "Abigail", "Olivia", "Isabella", "Hannah", "Samantha", "Ava", "Ashley"]
 nc = 20 - 1
 charOpinions = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1] #scale 0-2 | 0 > = negative (targets player), 1 = neutral, 2 < = positive (will not target player)
 charRoles = []
+charDead = []
 
 def duplicateCheck(input):
     for elem in input:
@@ -19,53 +19,37 @@ def duplicateCheck(input):
             return True #Has duplicate
     return False #No duplicate
 
-def giveRole():
+def players():
+    print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+    print("Players")
+
+    for i in playerList:
+        print(i)
+
+def gameSetup():
     global role
+    global charDead
+    global charOpinions
 
     #roleNum = random.randint(0,2)
     #role = roleOptions[roleNum]
     role = "innocent"
 
-def opinionDown(input):
-    if input in playerList:
-            if input == playerList[0]:
-                charOpinions[0] = charOpinions[0] - 1
-                return True
-            elif input == playerList[1]:
-                charOpinions[1] = charOpinions[1] - 1 
-                return True
-            elif input == playerList[2]:
-                charOpinions[2] = charOpinions[2] - 1 
-                return True
-            elif input == playerList[3]:
-                charOpinions[3] = charOpinions[3] - 1 
-                return True
-            elif input == playerList[4]:
-                charOpinions[4] = charOpinions[4] - 1 
-                return True
-            elif input == playerList[5]:
-                charOpinions[5] = charOpinions[5] - 1 
-                return True
-            elif input == playerList[6]:
-                charOpinions[6] = charOpinions[6] - 1 
-                return True
-            elif input == playerList[7]:
-                charOpinions[7] = charOpinions[7] - 1 
-                return True
-            elif input == playerList[8]:
-                charOpinions[8] = charOpinions[8] - 1 
-                return True
-            elif input == playerList[9]:
-                charOpinions[9] = charOpinions[9] - 1 
-                return True
-            elif input == playerList[10]:
-                charOpinions[10] = charOpinions[10] - 1 
-                return True
-            elif input == playerList[11]:
-                charOpinions[11] = charOpinions[11] - 1 
-                return True
+    for x in range(playerCount - 1):
+        charOpinions[x] = 1
+
+    for x in range(playerCount - 1):
+        charDead[x] = False
+
+def opinion(input, char):
+    global charOpinions
+
+    if input == "down":
+        charOpinions[char] = charOpinions[char] - 1
+    elif input == "up":
+        charOpinions[char] = charOpinions[char] + 1
     else:
-        print("ERROR in opinionDown")
+        print("ERROR in opinion")
 
 def gameStart():
     print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nAssassin")
@@ -251,15 +235,11 @@ def game():
     global game
 
     if game == False:
-        giveRole()
+        gameSetup()
 
     game = True
     
-    print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
-    print("Players")
-
-    for i in playerList:
-        print(i)
+    players()
 
     print("\n\n")
     print("You are " + role + "\nTurn options")
@@ -271,7 +251,7 @@ def game():
     elif role == "detective":
         detectiveOptions()
     else:
-        print("ERROR in role assignment")
+        print("ERROR in game")
 
 def innoOptions():
     choice = input("1. Accuse\n2. Do nothing\n\n").lower()
@@ -280,7 +260,7 @@ def innoOptions():
         accuseWho = input("Who do you want to accuse")
 
         if accuseWho in playerList:
-            opinionDown(accuseWho)
+            opinion("down", accuseWho)
         else:
             print("\n\n" + choice + " is not a valid option")
             time.sleep(3)
