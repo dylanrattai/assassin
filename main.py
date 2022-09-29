@@ -9,7 +9,7 @@ roleOptions = ["assassin", "detective", "innocent"]
 playerList = []
 nameOptions = ["Jacob", "Michael", "Josh", "Matt", "Ethan", "Andrew", "Daniel", "Anthony", "Chris", "Joseph", "Emily", "Emma", "Madison", "Abigail", "Olivia", "Isabella", "Hannah", "Samantha", "Ava", "Ashley"]
 nc = 20 - 1
-charOpinions = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1] #scale 0-2 | 0 > = negative (targets player), 1 = neutral, 2 < = positive (will not target player)
+charOpinions = [] #scale 0-2 | 0 > = negative (targets player), 1 = neutral, 2 < = positive (will not target player)
 charRoles = []
 charDead = []
 
@@ -41,15 +41,32 @@ def gameSetup():
     for x in range(playerCount - 1):
         charDead[x] = False
 
-def opinion(input, char):
+def opinion(upDn, char):
     global charOpinions
 
-    if input == "down":
-        charOpinions[char] = charOpinions[char] - 1
-    elif input == "up":
-        charOpinions[char] = charOpinions[char] + 1
-    else:
-        print("ERROR in opinion")
+    for x in range(playerCount):
+        if playerList[x] == char:
+            if upDn == "down":
+                charOpinions[x] = charOpinions[x] - 1
+            elif upDn == "up":
+                charOpinions[x] = charOpinions[x] + 1
+            else:
+                print("ERROR in opinion")
+
+def isDead(char):
+    for x in range(playerCount):
+        if playerList[x] == char:
+            if charDead[x] == False:
+                return False
+            elif charDead[x] == True:
+                return True
+            else:
+                print("ERROR in opinion")
+
+def kill(input):
+    for x in range(playerCount):
+        if playerList[x] == input:
+            charDead[x] == True
 
 def gameStart():
     print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nAssassin")
@@ -241,9 +258,6 @@ def game():
     
     players()
 
-    print("\n\n")
-    print("You are " + role + "\nTurn options")
-
     if role == "innocent":
         innoOptions()
     elif role == "assassin":
@@ -254,13 +268,20 @@ def game():
         print("ERROR in game")
 
 def innoOptions():
+    print("\n\n")
+    print("You are " + role + "\nTurn options")
     choice = input("1. Accuse\n2. Do nothing\n\n").lower()
 
     if choice == "1" or choice == "accuse":
-        accuseWho = input("Who do you want to accuse")
+        accuseWho = input("\nWho do you want to accuse").lower()
 
         if accuseWho in playerList:
             opinion("down", accuseWho)
+            game2()
+        elif isDead(accuseWho) == True:
+            print("\n\n" + choice + " is dead")
+            time.sleep(3)
+            innoOptions()
         else:
             print("\n\n" + choice + " is not a valid option")
             time.sleep(3)
@@ -268,5 +289,39 @@ def innoOptions():
 
     elif choice == "2" or choice == "nothing" or choice == "do nothing":
         game2()
+
+def detectiveOptions():
+    print("\n\n")
+    print("You are " + role + "\nTurn options")
+    choice = input("1. Accuse\n2. Kill\n3. Do Nothing").lower()
+
+    if choice == "1" or "accuse":
+        accuseWho = input("\nWho do you want to accuse").lower()
+
+        if accuseWho in playerList:
+            opinion("down", accuseWho)
+            game2()
+        elif isDead(accuseWho) == True:
+            print("\n\n" + choice + " is dead")
+            time.sleep(3)
+            innoOptions()
+        else:
+            print("\n\n" + choice + " is not a valid option")
+            time.sleep(3)
+            innoOptions()
+    elif choice == "2" or "kill" or "shoot":
+        killWho = input("Who do you want to kill").lower()
+
+        if killWho in playerList:
+            kill(killWho)
+            game2()
+        elif isDead(killWho) == True:
+            print("\n\n" + killWho + " is already dead")
+            time.sleep(3)
+            innoOptions()
+        else:
+            print("\n\n" + choice + " is not a valid option")
+            time.sleep(3)
+            innoOptions()
 
 gameStart()
